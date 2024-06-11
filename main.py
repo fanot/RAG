@@ -18,6 +18,11 @@ bot = telebot.TeleBot(BOT_API_KEY)
 chat = GPT(OPENAI_API_KEY)
 storage = VectorStorage(OPENAI_API_KEY)
 
+# Ensure that the keys are not None
+if BOT_API_KEY is None or OPENAI_API_KEY is None:
+    logging.error("API keys are not set. Please check your environment variables.")
+    exit(1)  # Exit the script if the keys are not set
+
 # Load "Master and Margarita" as the base document for all users
 @retry(wait=wait_exponential(multiplier=1, max=60), stop=stop_after_attempt(5))
 def initialize_storage_with_book():
