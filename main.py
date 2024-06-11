@@ -30,16 +30,15 @@ initialize_storage_with_book()
 # Welcome message for /start command
 @bot.message_handler(commands=['start'])
 def send_welcome_message(message):
-    bot.reply_to(message, "Hi there! I'm Ragoût. For more information, type /help. You can start by asking questions about 'Master and Margarita'.")
+    bot.reply_to(message, "Привет! Я Раг. Для получения дополнительной информации введите /help. Вы можете начать с вопросов о 'Мастере и Маргарите'.")
 
 # Help message content and handler
 help_message = """
-Here's what you can do:
-- Ask me questions directly about 'Master and Margarita'.
-- Send me a PDF or TXT file, and I will process it for your personal queries.
-- Use /reset to delete your personal documents and reset our conversation.
-
-/reset - Erase your data and start over.
+Вот что вы можете делать:
+- Отправьте мне PDF или TXT файл. Я обработаю его и сохраню для ваших личных запросов.
+- Задавайте вопросы по отправленным документам.
+- Используйте /select, чтобы выбрать один из ваших загруженных документов для запросов.
+- Используйте /reset, чтобы удалить все ваши документы и сбросить наш разговор.
 """
 
 @bot.message_handler(commands=['help'])
@@ -73,10 +72,11 @@ def handle_document(message):
             user_documents[user_id] = {}
         user_documents[user_id][doc_id] = {'name': filename, 'text': raw_text}
         storage.new_storage(f"{user_id}_{doc_id}", raw_text)
-        bot.reply_to(message, f"Document '{filename}' processed! Use /select to choose a document for queries.")
+        bot.reply_to(message,
+                     f"Документ '{filename}' обработан! Используйте /select, чтобы выбрать документ для запросов.")
     except Exception as e:
         logging.error(f"Error processing document: {e}")
-        bot.reply_to(message, "Failed to process the document. Please ensure it is a valid file.")
+        bot.reply_to(message, "Не удалось обработать документ. Пожалуйста, убедитесь, что это действительный файл.")
 
 
 # Command to list and select documents
@@ -84,10 +84,10 @@ def handle_document(message):
 def select_document(message):
     user_id = str(message.from_user.id)
     if user_id not in user_documents or not user_documents[user_id]:
-        bot.reply_to(message, "No documents uploaded. Please upload a document first.")
+        bot.reply_to(message, "Нет загруженных документов. Пожалуйста, сначала загрузите документ.")
         return
     doc_list = list_documents(user_id)
-    msg = f"Please choose a document by number:\n{doc_list}"
+    msg = f"Пожалуйста, выберите документ по номеру:\n{doc_list}"
     bot.reply_to(message, msg, parse_mode='Markdown')
 
 
@@ -98,9 +98,10 @@ def process_selection(message):
     doc_index = int(message.text) - 1
     if user_id in user_documents and doc_index in user_documents[user_id]:
         active_doc = user_documents[user_id][doc_index]
-        bot.reply_to(message, f"You selected '{active_doc['name']}'. Now you can ask questions about this document.")
+        bot.reply_to(message,
+                     f"Вы выбрали '{active_doc['name']}'. Теперь вы можете задавать вопросы об этом документе.")
     else:
-        bot.reply_to(message, "Invalid selection. Use /select to see available documents.")
+        bot.reply_to(message, "Неверный выбор. Используйте /select, чтобы посмотреть доступные документы.")
 
 
 # Reset user data and storage
@@ -110,7 +111,7 @@ def reset_user_data(message):
     chat.reset(user_id)
     storage.reset(user_id)
     user_documents.pop(user_id, None)
-    bot.reply_to(message, "Your data has been reset. Start again by uploading a new document.")
+    bot.reply_to(message, "Ваши данные были сброшены. Начните снова, загрузив новый документ.")
 
 
 # Start the bot's polling
