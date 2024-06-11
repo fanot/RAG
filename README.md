@@ -1,4 +1,4 @@
-# Ragoût Bot
+# Rag Bot
 
 This is the source code for Ragoût, a Telegram bot that uses OpenAI's GPT model to answer questions based on the text extracted from a PDF file (or just questions in general).
 
