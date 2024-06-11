@@ -2,4 +2,4 @@
 book_1.txt
 book.pdf
 venv
-keys.py
+.env

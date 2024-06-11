@@ -1,16 +1,19 @@
 import io
+import os
 import logging
 import telebot
 from utils import get_pdf_text, decode_text
 from gpt import GPT
 from storage import VectorStorage
-from keys import BOT_API_KEY, OPENAI_API_KEY
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Initialize the bot and other components
+BOT_API_KEY = os.getenv('BOT_API_KEY')
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+
 bot = telebot.TeleBot(BOT_API_KEY)
 chat = GPT(OPENAI_API_KEY)
 storage = VectorStorage(OPENAI_API_KEY)
