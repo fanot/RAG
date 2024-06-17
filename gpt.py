@@ -35,14 +35,14 @@ class GPT:
             retry_delay (float): Initial delay for retries after rate limiting, in seconds.
         """
         self.messages = {}
-        self.chat = ChatOpenAI(openai_api_key=api_key, model='gpt-4o')
+        self.chat = ChatOpenAI(openai_api_key=api_key, model='gpt-3.5 turbo')
         self.retry_delay = retry_delay
 
     def new_rag(self, username: str, rag_content: str) -> None:
         self.messages[username] = [
-            SystemMessage(content="You are a helpful assistant. Your name is Ragoût."),
+            SystemMessage(content="Ты помошник. Твое имя РАГ."),
             HumanMessage(content=make_rag(rag_content)),
-            AIMessage(content="I understand. I will answer your questions based on this document.")
+            AIMessage(content="Я понял. Я отвечу на выши вопросы по этоому документу.")
         ]
 
     def ask(self, username: str, query: str) -> str:
@@ -61,7 +61,7 @@ class GPT:
         return res.content
 
     def reset(self, username: str) -> None:
-        self.messages[username] = [SystemMessage(content="You are a helpful assistant.")]
+        self.messages[username] = [SystemMessage(content="Ты помошник.")]
         self.retry_delay = 1.0  # Reset delay on a new conversation
 
 

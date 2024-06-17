@@ -84,7 +84,7 @@ def handle_document(message):
         bot.reply_to(message,
                      f"Документ '{filename}' обработан! Используйте /select, чтобы выбрать документ для запросов.")
     except Exception as e:
-        logging.error(f"Error processing document: {e}")
+        logging.error(f"Ошибка загрузки документа: {e}")
         bot.reply_to(message, "Не удалось обработать документ. Пожалуйста, убедитесь, что это действительный файл.")
 
 
