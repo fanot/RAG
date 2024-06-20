@@ -1,4 +1,4 @@
-# Rag Bot
+![image](https://github.com/fanot/RAG/assets/59705773/82e049f9-86c2-460a-b643-ab2900d12e7d)![image](https://github.com/fanot/RAG/assets/59705773/82e049f9-86c2-460a-b643-ab2900d12e7d)# Rag Bot
 
 This is the source code for Rag bot, a Telegram bot that uses OpenAI's GPT model to answer questions based on the text extracted from a PDF file (or just questions in general).
 
@@ -10,6 +10,7 @@ When a user sends a PDF document, the bot downloads it, extracts the text, split
 
 Once the text is stored, the user can ask questions. The bot will embed the question using the same model and retrieve the most similar chunks of text in the database. Then, it will feed them into the GPT model to generate a response. This is how RAG (Retrieval-Augmented Generation) works.
 
+![image](https://github.com/fanot/RAG/assets/59705773/457c395a-1a0c-425a-b907-e416a1d9c841)
 
 ## Download source code
 
